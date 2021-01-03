@@ -1,0 +1,211 @@
+\documentclass[11pt,a4paper]{article} 
+
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage[T1]{fontenc}
+%\usepackage{pslatex}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel} 
+\usepackage{graphicx} 
+\usepackage{amsmath} 
+\setlength{\unitlength}{1mm}
+\usepackage{enumitem}
+\usepackage{cancel}
+\usepackage{amssymb} % pour les ensembles NN
+\usepackage{mathrsfs} % pour les hypothèses de récurrences \PP
+\usepackage{fancyhdr}
+\usepackage{tikz,tkz-tab}
+\usepackage{fancybox}
+\usepackage{titling}
+\usepackage[explicit]{titlesec}
+\usepackage{mathtools}
+
+% pour avoir les références complètes aux subsubsections (e.g. 2.B.3)
+\renewcommand\thesection{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\Alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+% format Problème 1, Partie 1.A et Question 1.A.1
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{#1\ \thesection}
+\titleformat{\subsection}{\normalfont\large\bfseries}{}{0em}{#1\ \thesubsection}
+\titleformat{\subsubsection}{\normalfont\bfseries}{}{0em}{#1\ \thesubsubsection}
+
+% format Problème 1, Partie A et Question 1
+%\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{#1\ \thesection}
+%\titleformat{\subsection}{\normalfont\large\bfseries}{}{0em}{#1\ \Alph{subsection}}
+%\titleformat{\subsubsection}{\normalfont\bfseries}{}{0em}{#1\ \arabic{subsubsection}}
+
+\definecolor{Honeydew1}{rgb}{.94,1,.94}
+
+\newcommand{\res}{\colorbox{Honeydew1}}
+\newcommand{\resm}[1]{\colorbox{Honeydew1}{$\displaystyle #1$}}
+
+\pagestyle{fancy}
+
+\DeclareMathOperator{\NN}{\mathbb{N}}
+\DeclareMathOperator{\PP}{\mathscr{P}}
+\DeclareMathOperator{\RR}{\mathbb{R}}
+\DeclareMathOperator{\e}{e}
+
+\newcommand{\monNom}{Prénom Nom}
+\newcommand{\maClasse}{T\textsuperscript{le}1}
+
+
+\lhead{\monNom}
+\chead{}
+\rhead{\maClasse}
+
+\lfoot{\jobname.tex}
+\cfoot{}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\setlength{\droptitle}{-1.5cm}
+
+\makeatletter
+\renewcommand{\maketitle}{
+  \thispagestyle{empty}
+  \begin{center}
+  \shadowbox{\parbox{4in}{%
+     \centering%
+     \textrm{\textbf{\Large \@title}}\\
+     \vspace{0.2cm}
+     \textrm{\large \@author}\\
+     \vspace{0.2cm}
+     \textrm{\large \@date}
+  }} 
+  \end{center}
+  \null
+}
+
+\author{\monNom, \maClasse}
+\title{Devoir maison x}
+\date{\today} 
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{fancy}
+
+\section{Problème}
+
+\subsection{Partie}
+
+\subsubsection{}
+Une équation
+\begin{equation}
+  \sqrt{x^2}=\lvert x\rvert \label{eq_abs}
+\end{equation}
+
+Une autre non numérotée:
+\begin{equation*}
+  \sum_{k=0}^nk^3=\left(\frac{n(n+1)}{2}\right)^2
+\end{equation*}
+
+Un système d'équations:
+\begin{equation}
+  \left\lbrace
+  \begin{aligned}
+    \binom{n}{k}      & = \frac{n!}{k!(n-k)!}                                                                       \\
+    A_{m,n}           & =
+    \begin{pmatrix}
+      a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\
+      a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
+      \vdots  & \vdots  & \ddots & \vdots  \\
+      a_{m,1} & a_{m,2} & \cdots & a_{m,n}
+    \end{pmatrix} \\
+    \int_a^b f(x)\,dx & =\lim_{n\rightarrow+\infty}\frac{b-a}{n}\sum_{k=0}^{n} f\left(a+k\times\frac{b-a}{n}\right) \\
+  \end{aligned}
+  \right.
+\end{equation}
+
+Une référence à l'équation (\ref{eq_abs}).
+
+Un blabla mathématique: $\forall x\in \RR^\star, \exists\, y\in \left]-1;1\right[\backslash \lbrace{0\rbrace}\, /\, x=\frac{1}{y} $
+
+Ou encore $\forall \varepsilon>0, \exists N\in\mathbb{N}, \forall n\geqslant N, \left\vert u_n - l \right\vert < \varepsilon.$
+
+\subsubsection{}
+Un tableau de signe: \\
+\begin{center}
+  \begin{tikzpicture}
+    \tkzTabInit[espcl=2.0]
+    {$x$ / 1 ,$f(x)$ /1 }%
+    {$0$ , $\alpha$ , $+\infty$}%
+    \tkzTabLine{ d, -, z , +, }
+  \end{tikzpicture}
+\end{center}
+
+\subsection{Partie}
+\subsubsection{}
+Des limites avec surlignage du résultat:
+
+\begin{equation*}
+  \left.
+  \begin{aligned}
+    \lim_{x\rightarrow 0}\frac{\sin x}{x} & = 1      \\
+    \lim_{x\rightarrow+\infty}\ln x       & =+\infty
+  \end{aligned}
+  \right\rbrace \text{par produit/somme, on en déduit donc que } \resm{\lim_{x\rightarrow+\infty}f(x)=+\infty}
+\end{equation*}
+
+\subsubsection{}
+\begin{enumerate}[label=(\alph*)]
+  \item sous-question
+  \item autre sous-question
+\end{enumerate}
+
+\subsection{Partie}
+
+\subsubsection{}\label{q2.A.3}
+Un align pour une série d'équations:
+\begin{align*}
+  f^\prime(x) & =(x)^\prime \\
+              & = \resm{1}  \\
+\end{align*}
+\section{Problème}
+
+\subsection{Partie}
+
+\subsubsection{}
+Une référence à une question \ref{q2.A.3}.
+
+Soustraction avec ligne:
+
+\begin{align*}
+  f(x)                            & = a+\cancel{b} \\
+  - \;\;\;\;\;\;\;g(x)            & = \cancel{b}-a \\
+  \cline{1-3}
+  f(x)-g(x)                       & = a+a          \\
+  \iff \;\;\;\;\;\;\;\;\;2f(x)    & = 2\times a    \\
+  \iff \;\;\;\;\;\;\;\;\;\;\;f(x) & = a            \\
+\end{align*}
+
+\subsection{Partie}
+\subsubsection{}
+
+Un alignement plus complexe:
+
+\begin{alignat*}{3}
+       &   & f(x)=\frac{\e^x-\e^{-x}}{2} & >0       \\
+  \iff &   & \e^x-\e^{-x}                & >0       \\
+  \iff &   & \e^x                        & >\e^{-x} \\
+  \iff &   & x                           & >-x      \\
+  \iff &   & 2x                          & >0       \\
+  \iff &   & x                           & >0
+\end{alignat*}
+
+\subsubsection{}
+
+Tableau de variation:\\
+
+\begin{tikzpicture}
+  \tkzTabInit[espcl=6]{$x$/1,$f'(x)$/1, $f(x)$/2}{$-\infty$,$0$,$+\infty$}% 
+  \tkzTabLine{ , , +, }%
+  \tkzTabVar{- / $-\infty$,R / ,+ / $+\infty$ }
+  \tkzTabVal[draw]{1}{3}{0.5}{0}{0}
+\end{tikzpicture}
+
+
+\end{document}
