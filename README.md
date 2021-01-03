@@ -1,3 +1,3 @@
 # DevoirMathsEleve
 
-Exemple de devoir de maths type pour élève de terminale.
+Exemple de devoir de maths type en LaTeX pour élève de terminale.
