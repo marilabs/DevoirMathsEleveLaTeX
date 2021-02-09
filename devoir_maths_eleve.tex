@@ -13,11 +13,20 @@
 \usepackage{amssymb} % pour les ensembles NN
 \usepackage{mathrsfs} % pour les hypothèses de récurrences \PP
 \usepackage{fancyhdr}
-\usepackage{tikz,tkz-tab}
+\usepackage{tikz,tkz-tab,tikz-3dplot,tkz-euclide}
+\usetkzobj{all}
+\usetikzlibrary{angles,quotes,intersections,calc,through}
 \usepackage{fancybox}
 \usepackage{titling}
 \usepackage[explicit]{titlesec}
 \usepackage{mathtools}
+\usepackage{eurosym}
+\usepackage{stmaryrd} % pour parallèle // \sslash
+
+\usepackage{pgfplots}
+
+
+\usepackage[lined,boxed,commentsnumbered, ruled,vlined,linesnumbered, french, onelanguage]{algorithm2e}
 
 % pour avoir les références complètes aux subsubsections (e.g. 2.B.3)
 \renewcommand\thesection{\arabic{section}}
@@ -39,12 +48,44 @@
 \newcommand{\res}{\colorbox{Honeydew1}}
 \newcommand{\resm}[1]{\colorbox{Honeydew1}{$\displaystyle #1$}}
 
+% vecteurs
+\newcommand*\colvec[3][]{
+    \begin{pmatrix}\ifx\relax#1\relax\else#1\\\fi#2\\#3\end{pmatrix}
+}
+
 \pagestyle{fancy}
 
+% ensembles N,Z,Q,D,R,C
 \DeclareMathOperator{\NN}{\mathbb{N}}
-\DeclareMathOperator{\PP}{\mathscr{P}}
+\DeclareMathOperator{\ZZ}{\mathbb{Z}}
+\DeclareMathOperator{\QQ}{\mathbb{Q}}
+\DeclareMathOperator{\DD}{\mathbb{D}}
 \DeclareMathOperator{\RR}{\mathbb{R}}
+\DeclareMathOperator{\CC}{\mathbb{C}}
 \DeclareMathOperator{\e}{e}
+% droite D et plan P
+\DeclareMathOperator{\GP}{\mathscr{P}}
+\DeclareMathOperator{\GD}{\mathscr{D}}
+\DeclareMathOperator{\GA}{\mathscr{A}}
+\DeclareMathOperator{\GC}{\mathscr{C}}
+
+\newcommand*{\QEDA}{\null\nobreak\hfill\ensuremath{\blacksquare}}
+\newcommand*{\QEDB}{\null\nobreak\hfill\ensuremath{\square}}
+\newcommand{\usd}{\frac{1}{2}}
+\newcommand{\tsd}{\frac{3}{2}}
+\newcommand{\csd}{\frac{5}{2}}
+\newcommand{\usq}{\frac{1}{4}}
+\newcommand{\tsq}{\frac{3}{4}}
+\newcommand{\csq}{\frac{5}{4}}
+\newcommand{\ssq}{\frac{6}{4}}
+\newcommand{\psd}{\frac{\pi}{2}}
+
+% angle deux vecteurs
+\newcommand{\angv}[2]{(\widehat{\overrightarrow{#1},\overrightarrow{#2}})}
+\newcommand{\vf}[1]{\overrightarrow{#1}}
+
+% conjugué complexe
+\newcommand{\zb}[1]{\overline{#1}}
 
 \newcommand{\monNom}{Prénom Nom}
 \newcommand{\maClasse}{T\textsuperscript{le}1}
@@ -125,6 +166,14 @@ Une référence à l'équation (\ref{eq_abs}).
 Un blabla mathématique: $\forall x\in \RR^\star, \exists\, y\in \left]-1;1\right[\backslash \lbrace{0\rbrace}\, /\, x=\frac{1}{y} $
 
 Ou encore $\forall \varepsilon>0, \exists N\in\mathbb{N}, \forall n\geqslant N, \left\vert u_n - l \right\vert < \varepsilon.$
+
+Un vecteur 3D: $\overrightarrow{AB}\colvec[1]{-1}{-1}$ et un vecteur 2D: $\overrightarrow{CD}\colvec{-1}{-1}$. 
+
+Un peu de géométrie: $\GD\cap\GP=\{A\}$, $(CD)\sslash \GD$.
+
+De la géométrie et des complexes:
+$\angv{OA}{OB}=\arg\left(\frac{b}{a}\right)=\arg(i)\equiv\frac{\pi}{2}[2\pi]$ ce qui montre que le triangle $OAB$ est rectangle en $O$.
+$\omega=\e^{i\frac{2\pi}{5}}$, $\zb{\omega}=\e^{-i\frac{2\pi}{5}}$.
 
 \subsubsection{}
 Un tableau de signe: \\
@@ -207,5 +256,291 @@ Tableau de variation:\\
   \tkzTabVal[draw]{1}{3}{0.5}{0}{0}
 \end{tikzpicture}
 
+\subsubsection{}
+
+Une figure géométrique en 3D: un cube.
+
+\tdplotsetmaincoords{70}{20}
+\usetikzlibrary{3d}
+\begin{center}
+\begin{tikzpicture}[scale=5, tdplot_main_coords]
+\coordinate(A) at (0,0,0);
+\coordinate(B) at (1,0,0);
+\coordinate(C) at (1,1,0);
+\coordinate(D) at (0,1,0);
+\coordinate(E) at (0,0,1);
+\coordinate(F) at (1,0,1);
+\coordinate(G) at (1,1,1);
+\coordinate(H) at (0,1,1);
+\coordinate (I) at ($(A)!0.5!(B)$); % milieu [AB]
+\draw[thick](A)--(B)--(F)--(E)--cycle;
+\draw[thick](B)--(C)--(G)--(F)--cycle;
+\draw[thick](E)--(F)--(G)--(H)--cycle;
+\draw[dashed](A)--(D)--(C);
+\draw[dashed](H)--(D);
+\draw(A) node[anchor=north]{A};
+\draw(B) node[anchor=north]{B};
+\draw(C) node[anchor=west]{C};
+\draw(D) node[anchor=east]{D};
+\draw(E) node[anchor=east]{E};
+\draw(F) node[anchor=north east]{F};
+\draw(G) node[anchor=west]{G};
+\draw(H) node[anchor=south]{H};
+\draw(I) node{$\bullet$};
+\draw(I) node[anchor=north east]{I};
+\end{tikzpicture}
+\end{center}
+
+Une figure géométrique en 2D:
+
+\usetikzlibrary{calc}
+\begin{center}
+\begin{tikzpicture}[scale=5] % 5cm pour 1cm
+\coordinate(O) at (0,0);
+\draw(O) node[anchor=north west]{O};
+\draw[->,thick] (-1.3,0) -- (1.3,0) node (xaxis) [right] {$x$};
+\foreach \x in {-1.2,-1.1,...,1.2} {
+  %\draw (\x,0.02cm) -- (\x,-0.02cm) node[below] {$\x\phantom{-}\strut$};
+  \draw (\x,0.02cm) -- (\x,-0.02cm);
+
+}
+\draw[->,thick] (0,-1.3) -- (0,1.3) node (yaxis) [above] {$y$};
+\foreach \y in {-1.2,-1.1,...,1.2} {
+  %\draw (0.02cm,\y) -- (-0.02cm,\y) node[below] {$\x\phantom{-}\strut$};
+  \draw (0.02cm,\y) -- (-0.02cm,\y);
+
+}
+\coordinate(W) at (1,0);
+\coordinate(J) at (0,1);
+\coordinate(W1) at ({cos(72)},{sin(72)});
+\coordinate(W2) at ({cos(144)},{sin(144)});
+\coordinate(W3) at ({cos(216)},{sin(216)});
+\coordinate(W4) at ({cos(288)},{sin(288)});
+\draw(W) node{$\bullet$};
+\draw(W) node[anchor=north west]{$\Omega_0$};
+\draw(J) node{$\bullet$};
+\draw(J) node[anchor=north east]{J};
+\draw(O) circle(1);
+\draw(W1) node{$\bullet$};
+\draw(W1) node[anchor=south west]{$\Omega_1$};
+\draw(W2) node{$\bullet$};
+\draw(W2) node[anchor=south east]{$\Omega_2$};
+\draw(W3) node{$\bullet$};
+\draw(W3) node[anchor=north east]{$\Omega_3$};
+\draw(W4) node{$\bullet$};
+\draw(W4) node[anchor=north west]{$\Omega_4$};
+\draw[thick,color=blue] (W)--(W1)--(W2)--(W3)--(W4)--cycle;
+\end{tikzpicture}
+\end{center}
+
+Un exemple de géométrie euclidienne: la droite d'Euler:
+
+\begin{center}
+\begin{tikzpicture}
+
+  % définitions des sommets du triange
+  \def\Ax{0} \def\Ay{0}
+  \def\Bx{9} \def\By{0}
+  \def\Cx{2} \def\Cy{7}
+  % longueur pour construire les médiatrices
+  \def\d{2}
+
+  \clip (-4,-4) rectangle (10,10);
+
+  % triangle
+  \coordinate[label=below left:$A$] (A) at (\Ax,\Ay);
+  \coordinate[label=below right:$B$] (B) at (\Bx,\By);
+  \coordinate[label=above:$C$] (C) at (\Cx,\Cy);
+  \draw[name path=triangle,thick] (A) -- node[left] {$b$} (C) -- node[above] {$c$} (B) -- node[below] {$a$} cycle;
+  
+  % milieux & médianes
+  \coordinate (IC) at ($(A)!0.5!(B)$);
+  \coordinate (IB) at ($(A)!0.5!(C)$);
+  \coordinate (IA) at ($(C)!0.5!(B)$);
+  \draw[color=blue] (C) -- (IC);
+  \draw[color=blue] (A) -- (IA);
+  \draw[color=blue] (B) -- (IB);
+  %\coordinate (G) at (barycentric cs:A=1,B=1 ,C=1);
+  \coordinate (G) at (intersection of IA--A and IB--B);
+  \node at (G){\color{blue}$\bullet$};
+  \node[above] at (G){\color{blue}$G$};
+  
+  % côtés égaux
+  \node[magenta] at ($(A)!0.5!(IC)$){$/$};
+  \node[magenta] at ($(IC)!0.5!(B)$){$/$};
+  
+  % angles
+  %\tkzMarkAngle[size=1cm,color=cyan,mark=|](C,A,B);
+  
+  % les angles
+  %\tkzMarkAngle[size=0.5cm](B,A,C)
+  %\tkzLabelAngle[pos=1](B,A,C){$\alpha$}
+  %\tkzMarkAngle(C,B,A)
+  %\tkzLabelAngle[pos=1.5](C,B,A){$\beta$}
+  %\tkzMarkAngle[size=0.5cm](A,C,B)
+  %\tkzLabelAngle[pos=1](A,C,B){$\gamma$}
+
+  % hauteurs
+  \tkzDefPointBy[projection=onto A--B](C)\tkzGetPoint{HC}
+  \draw[color=red] (C) -- (HC);
+  \tkzMarkRightAngle(B,HC,C)
+  \tkzDefPointBy[projection=onto B--C](A)\tkzGetPoint{HA}
+  \draw[color=red] (A) -- (HA);
+  \tkzMarkRightAngle(C,HA,A)
+  \tkzDefPointBy[projection=onto A--C](B)\tkzGetPoint{HB}
+  \draw[color=red] (B) -- (HB);
+  \tkzMarkRightAngle(A,HB,B)
+  \coordinate(H)at(intersection of A--HA and B--HB);
+  \draw(H) node{\color{red}$\bullet$};
+  \draw(H)[above left] node{\color{red}$H$};
+  
+  % médiatrices
+  % le point AM rotation de C de centre IA et d'angle 90 appartient à la médiatrice  
+  \coordinate(AM)at([rotate around={90:(IA)}]C);
+  \coordinate(BM)at([rotate around={90:(IB)}]A);
+  \coordinate(CM)at([rotate around={90:(IC)}]A);
+  % cercle circonscrit
+  \coordinate(O)at(intersection of IA--AM and IC--CM);
+  \node[right] at (O){\color{violet}$O$};
+  \node[draw,color=violet,circle through=(A)]at(O){$\bullet$};
+  % dessine les médiatrices
+  \draw[color=violet] (IA)--(O);
+  \tkzMarkRightAngle(O,IB,A)
+  \draw[color=violet] (IB)--(O);
+  \tkzMarkRightAngle(C,IA,O)
+  \draw[color=violet] (IC)--(O);
+  \tkzMarkRightAngle(O,IC,A)
+  
+  % droite d'Euler
+  \draw[thick] (H)--(G)--(O);
+    
+  % bissectrices
+  % cercle virtuel de centre B
+  \path[name path=cB](B) circle (\d);
+  % intersection cercle côtés
+  \path[name intersections={of=cB and triangle, by={a,b}}];
+  % milieu de la base du triangle isocèle
+  \coordinate (Bbb) at ($1/2*(a)+1/2*(b)$);
+  % pied de la bissectrice
+  \coordinate (Bb) at (intersection of B--Bbb and A--C);
+  \draw[color=green] (B)--(Bb);
+  % cercle virtuel de centre C
+  \path[name path=cC](C) circle (\d);
+  % intersection cercle côtés
+  \path[name intersections={of = cC and triangle, by={b,c}}];
+  % milieu de la base du triangle isocèle
+  \coordinate (Cbb) at ($1/2*(b)+1/2*(c)$);
+  % pied de la bissectrice
+  \coordinate (Cb) at (intersection of C--Cbb and B--A);
+  \draw[color=green] (C)--(Cb);
+  % cercle virtuel de centre A
+  \path[name path=cA](A) circle (\d);
+  % intersection cercle côtés
+  \path[name intersections={of = cA and triangle, by={c,a}}];
+  % milieu de la base du triangle isocèle
+  \coordinate (Abb) at ($1/2*(c)+1/2*(a)$);
+  % pied de la bissectrice
+  \coordinate (Ab) at (intersection of A--Abb and C--B);
+  \draw[color=green] (A)--(Ab);
+  % centre du cercle inscrit:  {OM}=(AAb)n(BBb)n(CCb)
+  \coordinate (OM) at (intersection of A--Ab and B--Bb);
+  \draw(OM) node{\color{green}$\bullet$};
+  \draw(OM)[above] node{\color{green}$\Omega$};
+  % rayon du cercle inscrit: OMOA où OA est le projeté de OM sur [BC]
+  \tkzDefPointBy[projection=onto A--B](OM)\tkzGetPoint{OC}
+  \draw[color=magenta] (OM) -- (OC);
+  \tkzMarkRightAngle(OM,OC,A)
+  \tkzDefPointBy[projection=onto B--C](OM)\tkzGetPoint{OA}
+  \draw[color=magenta] (OM) -- (OA);
+  \tkzMarkRightAngle(OM,OA,B)
+  \tkzDefPointBy[projection=onto C--A](OM)\tkzGetPoint{OB}
+  \draw[color=magenta] (OM) -- (OB);
+  \tkzMarkRightAngle(OM,OB,C)
+  % égalité angles orientés
+  \draw pic["$\alpha$", draw=gray, <->, angle eccentricity=1.3, angle radius=1.2cm] {angle=B--A--OM};
+  \draw pic["$\alpha$", draw=gray, <->, angle eccentricity=1.3, angle radius=1.2cm] {angle=OM--A--C};
+  \draw pic["$\beta$", draw=gray, <->, angle eccentricity=1.3, angle radius=1.2cm] {angle=C--B--OM};
+  \draw pic["$\beta$", draw=gray, <->, angle eccentricity=1.3, angle radius=1.2cm] {angle=OM--B--A};
+  \draw pic["$\gamma$", draw=gray, <->, angle eccentricity=1.3, angle radius=1.2cm] {angle=A--C--OM};
+  \draw pic["$\gamma$", draw=gray, <->, angle eccentricity=1.3, angle radius=1.2cm] {angle=OM--C--B};
+  
+  % cercle inscrit
+  \tkzCalcLength[cm](OM,OC)\tkzGetLength{r}
+  %\draw(OM) let \p1 = ($ (OM) - (OC) $) in circle ({veclen(\x1,\y1)});
+  \draw[color=green](OM) circle (\r);
+  
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{}
+
+Un algorithmes:
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\SetCustomAlgoRuledWidth{13cm}
+\setcounter{algocf}{1} % force le compteur à 2 pour l'algo
+\begin{algorithm}[H]
+\SetAlgoLined
+\SetKwInOut{Input}{Entrée}
+\SetKwInOut{Output}{Sortie}
+\Input{$x_M, y_M, z_M, x_N, y_N, z_N, x_P, y_P, z_P$}
+\Output{VRAI ou FAUX}
+\BlankLine
+$d \leftarrow x_N-x_M$\;
+$e \leftarrow y_N-y_M$\;
+$f \leftarrow z_N-z_M$\;
+$g \leftarrow x_P-x_M$\;
+$h \leftarrow y_P-y_M$\;
+$i \leftarrow z_P-z_M$\;
+$k \leftarrow d\times g+e\times h+f\times i$\;
+$l \leftarrow d^2+e^2+f^2$\;
+$m \leftarrow g^2+h^2+i^2$\;
+\eIf{$l = m$ \bf{et} $k = 0$}{\Return{VRAI}}{\Return{FAUX}}
+\caption{Détermine si le triangle $MNP$ est isocèle rectangle en $M$}
+\end{algorithm}
+\end{minipage}
+\end{center}
+
+\subsubsection{}
+
+Une courbe:
+
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[scale=1]
+  \def\xmin{-10} \def\xmax{10}
+  \def\ymin{-1} \def\ymax{1}
+  \def\nbpt{100}
+  \begin{axis}[
+    grid=both,
+    xmin=\xmin,
+    xmax=\xmax,
+    ymin=\ymin,
+    ymax=\ymax,
+    xlabel=$x$,
+    ylabel=$y$,
+    axis lines={center},
+    grid style={line width=.1pt,draw=lightgray},
+    major grid style={line width=.2pt,draw=gray},
+    minor tick num=4,
+    enlargelimits={abs=0.1},
+    tick style={draw=none},
+    ticklabel style={font=\tiny},
+    >=stealth
+    ]
+    \addplot[domain=\xmin:\xmax,blue,ultra thick,samples=\nbpt] plot[smooth] {sin(deg(x))/x} node [pos=0.9, above left] {$y=\frac{\sin(x)}{x}$};
+    \addplot [domain=\xmin:\xmax,red,ultra thick,samples=500] {sin(deg(x))}
+            node [pos=0.3, below right] {$y=x$};
+    \addplot [domain=\xmin:\xmax,green,ultra thick,samples=500] {1/x}
+            node [pos=1, below right] {$y=\frac{1}{x}$};
+  \end{axis}
+\end{tikzpicture}
+\caption{Plusieurs courbes}
+\end{figure}
+
+
 
 \end{document}
+
+
